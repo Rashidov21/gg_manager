@@ -1,0 +1,120 @@
+﻿# ------------------------------
+# Root / Common
+# ------------------------------
+node_modules/
+**/node_modules/
+
+# Env files
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Coverage / reports
+coverage/
+**/coverage/
+.nyc_output/
+
+# Build outputs
+build/
+dist/
+**/dist/
+out/
+.tmp/
+temp/
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Cursor / local agent artifacts
+# ------------------------------
+.cursor/
+
+# ------------------------------
+# Admin (Electron/Vite)
+# ------------------------------
+apps/admin/.vite/
+apps/admin/release/
+apps/admin/*.tgz
+apps/admin/.eslintcache
+
+# Electron builder artifacts
+apps/admin/dist_electron/
+apps/admin/win-unpacked/
+apps/admin/*.exe
+apps/admin/*.msi
+apps/admin/*.blockmap
+apps/admin/latest*.yml
+
+# ------------------------------
+# Client (React/Vite)
+# ------------------------------
+apps/client/.vite/
+apps/client/.eslintcache
+
+# ------------------------------
+# Tauri / Rust
+# ------------------------------
+apps/client/src-tauri/target/
+apps/client/src-tauri/.cargo/
+apps/client/src-tauri/*.log
+apps/client/src-tauri/Cargo.lock
+
+# Watchdog rust crate
+apps/client/src-watchdog/target/
+apps/client/src-watchdog/*.log
+apps/client/src-watchdog/Cargo.lock
+
+# Tauri generated bundles/assets
+apps/client/src-tauri/gen/
+apps/client/src-tauri/bundle/
+
+# ------------------------------
+# Server (NestJS/Prisma)
+# ------------------------------
+apps/server/dist/
+apps/server/.nestjs/
+apps/server/.eslintcache
+apps/server/prisma/dev.db*
+apps/server/prisma/*.db*
+
+# Prisma local engine/cache (if generated)
+apps/server/node_modules/.prisma/
+
+# ------------------------------
+# Docker local overrides
+# ------------------------------
+docker-compose.override.yml
+
+# ------------------------------
+# Optional: keep lockfiles tracked by default
+# (uncomment if you intentionally want to ignore)
+# ------------------------------
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

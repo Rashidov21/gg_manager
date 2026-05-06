@@ -1,0 +1,14 @@
+﻿:root {
+  color-scheme: dark;
+  font-family: Inter, Roboto, system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #020617;
+  color: #e2e8f0;
+}

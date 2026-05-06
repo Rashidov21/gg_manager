@@ -1,0 +1,20 @@
+[package]
+name = "gg_manager_client"
+version = "0.1.0"
+description = "GG Manager Tauri client shell"
+authors = ["GG Manager"]
+edition = "2021"
+
+[dependencies]
+tauri = { version = "1.5", features = [] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.37", features = ["rt-multi-thread", "macros", "time"] }
+winapi = { version = "0.3", features = ["winuser", "processthreadsapi", "handleapi", "psapi", "libloaderapi", "errhandlingapi", "dbt"] }
+tokio-tungstenite = "0.23"
+futures-util = "0.3"
+sysinfo = "0.31"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+

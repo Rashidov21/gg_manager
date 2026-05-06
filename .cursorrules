@@ -1,0 +1,508 @@
+GG Manager — Texnik topshiriq (Commercial v1)
+Product nomi
+
+GG Manager
+to‘liq nomi: Geeks Game Club Manager
+
+1. Loyiha maqsadi
+
+GG Manager — bu lokal LAN asosida ishlovchi, 40–100 ta Windows gaming PC uchun professional game club boshqaruv platformasi.
+
+Tizimning vazifasi:
+
+club egasiga barcha kompyuterlar ustidan markazlashgan nazorat berish
+mijozlarning sessiyalarini boshqarish
+tarif, balans va kassani yuritish
+client tomonda xavfsiz kiosk/shell muhit yaratish
+mahsulotni boshqa game clublarga o‘rnatib, litsenziya asosida sotish imkonini berish
+2. Ishlash muhiti
+Platforma
+Microsoft Windows 10 / 11
+Lokal LAN
+40–100 client PC
+1 ta admin/operator PC
+Ishlash modeli
+internet talab qilinmaydi
+tizim local-first
+server klub ichidagi admin kompyuterda ishlaydi
+3. Tizim arxitekturasi
+GG Manager LAN
+
+Admin PC
+ ├─ GG Server
+ ├─ PostgreSQL
+ ├─ GG Admin Dashboard
+ ├─ Telegram notifier
+ └─ Update repository
+
+LAN
+ └─ 40–100 Client PCs
+      ├─ GG Client Shell
+      ├─ Rust Watchdog Service
+      ├─ UDP heartbeat
+      ├─ TCP sync
+      └─ Local cache / offline mode
+4. Texnologik stack
+Server
+Node.js
+NestJS
+Prisma
+PostgreSQL
+Admin desktop
+Electron
+React
+Client shell
+Tauri
+Rust native service
+Windows shell integration
+5. Client shell (mijoz tomoni)
+
+Client oddiy ilova emas — Windows Explorer o‘rnini bosuvchi shell sifatida ishlaydi.
+
+5.1 Login / session
+account orqali kirish
+logout
+session davomiyligi
+balans
+bonus vaqt
+5.2 Game launcher
+o‘yinlar ro‘yxati
+kategoriyalar
+icon/poster
+launch
+favorites
+
+Misollar:
+
+Counter-Strike 2
+Dota 2
+Valorant
+5.3 Wallpaper engine
+club branding
+dinamik fon
+qolgan vaqt vizual timer
+status panel
+5.4 Xabarlar
+
+Admin:
+
+bitta mijozga xabar yuborishi mumkin
+barcha clientlarga broadcast
+
+Masalan:
+
+“Klub 15 daqiqadan so‘ng yopiladi”
+5.5 Seans tugashi
+
+Vaqt tugaganda:
+
+warning
+o‘yinlarni yopish
+logout
+ekran bloklash
+6. Admin dashboard
+6.1 Grid monitoring
+
+100 ta PC real vaqtda ko‘rinadi.
+
+Holatlar:
+
+bo‘sh
+band
+bron qilingan
+offline
+nosoz
+
+Har bir kartada:
+
+kompyuter nomi
+session holati
+qolgan vaqt
+client online/offline
+6.2 Masofaviy boshqaruv
+
+Admin quyidagilarni bajara oladi:
+
+session start
+session stop
+session extend
+lock
+unlock
+shutdown
+reboot
+Wake-on-LAN
+6.3 Remote monitoring
+
+Lite mode:
+
+Client har 15–20 soniyada compressed screenshot yuboradi.
+
+Admin:
+
+thumbnail preview ko‘radi
+6.4 Hardware health monitor
+
+Client agent serverga yuboradi:
+
+CPU load
+CPU temp
+GPU temp
+disk usage
+RAM usage
+
+Alertlar:
+
+GPU harorati limitdan oshsa
+CPU 100% bo‘lib qolsa
+disk kritik holatga yetsa
+
+Admin dashboard alert chiqaradi.
+
+7. Tarif va pricing engine
+
+Tarif tizimi data-driven bo‘ladi.
+
+7.1 Soatbay tarif
+Oddiy zona
+
+masalan:
+
+1 soat
+VIP zona
+
+masalan:
+
+alohida narx
+7.2 Paketlar
+3 soat
+5 soat
+tungi paket
+
+Masalan:
+
+22:00 → 08:00
+7.3 Bonus tizimi
+Balans bonus
+
+Masalan:
+
+100 so‘m → 130 so‘m
+Bonus vaqt
+
+Masalan:
+
+100k to‘ldirsa +30 min
+7.4 Promokodlar
+
+Bir martalik yoki cheklangan promokodlar.
+
+Masalan:
+
+WELCOME20
+NIGHTBONUS
+
+Qo‘llanishi:
+
+yangi mijozlar
+chegirma
+bonus balans
+bonus vaqt
+8. Operator ruxsatnomalari
+Owner
+full access
+licensing
+pricing
+reports
+users
+Admin
+machine control
+sessions
+monitoring
+Operator
+cashier
+session start
+session stop
+extend
+balans to‘ldirish
+
+Operator:
+
+system config o‘zgartira olmaydi
+9. Xavfsizlik va barqarorlik (Security & Stability)
+9.1 Process watchdog
+
+Agar client shell majburan yopilsa:
+
+Rust service 1 soniya ichida qayta ishga tushiradi
+9.2 Shell protection
+
+Bloklanadi:
+
+Alt+Tab
+Alt+F4
+Win key
+taskbar access
+explorer access
+task manager
+
+Izoh: Ctrl+Alt+Del to‘liq bloklanmaydi, lekin escape path minimallashtiriladi.
+
+9.3 USB block
+
+Begona USB qurilmalar bloklanadi.
+
+Maqsad:
+
+virus
+o‘yin fayllarini o‘g‘irlash
+noqonuniy copy
+
+Admin allowlist qo‘llab-quvvatlanadi.
+
+9.4 Offline mode
+
+Agar LAN vaqtincha uzilsa:
+
+Client:
+
+sessionni local davom ettiradi
+timer ishlaydi
+local cache saqlanadi
+local event queue yig‘iladi
+
+Reconnect bo‘lganda:
+
+unsynced eventlar serverga push qilinadi
+reconciliation ishlaydi
+10. Tarmoq modeli
+UDP heartbeat
+
+Har 5–8 soniyada:
+
+clientId
+sessionId
+remainingTime
+localTimestamp
+
+Maqsad:
+
+lightweight status
+TCP
+
+TCP ishlatiladi:
+
+session commands
+sync
+updates
+control commands
+11. Telegram bot integratsiyasi
+
+Club owner uchun Telegram integratsiyasi.
+
+Real-time xabarlar
+yangi session
+session tugashi
+operator actions
+hardware alert
+Kunlik hisobot
+bugungi tushum
+ishlagan sessionlar
+top PC
+operator activity
+12. Auto-update manager
+
+Admin panel orqali:
+
+yangi build upload
+tanlangan PClarga deploy
+barcha clientlarga push update
+
+Client:
+
+checksum verify
+update apply
+restart
+13. Ma’lumotlar bazasi modeli
+
+Asosiy entitylar:
+
+Computer
+Session
+Account
+Tariff
+Operator
+PromoCode
+ClientEvent
+HardwareSnapshot
+License
+14. Prisma schema (commercial v1)
+enum MachineStatus {
+  ONLINE
+  OFFLINE
+  ACTIVE
+  RESERVED
+  ERROR
+  LOCKED
+}
+
+enum SessionStatus {
+  ACTIVE
+  PAUSED
+  FINISHED
+  EXPIRED
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  OPERATOR
+}
+
+enum TariffType {
+  HOURLY
+  PACKAGE
+  NIGHT
+  BONUS
+}
+
+model Computer {
+  id            String   @id @default(cuid())
+  name          String
+  ip            String
+  mac           String
+  status        MachineStatus
+  lastSeenAt    DateTime?
+  zone          String?
+  createdAt     DateTime @default(now())
+
+  sessions      Session[]
+  events        ClientEvent[]
+  snapshots     HardwareSnapshot[]
+}
+
+model Account {
+  id            String   @id @default(cuid())
+  username      String   @unique
+  balance       Decimal  @default(0)
+  bonusMinutes  Int      @default(0)
+  tier          String?
+  createdAt     DateTime @default(now())
+
+  sessions      Session[]
+}
+
+model Tariff {
+  id          String      @id @default(cuid())
+  name        String
+  type        TariffType
+  price       Decimal
+  minutes     Int
+  startHour   Int?
+  endHour     Int?
+  zone        String?
+
+  sessions    Session[]
+}
+
+model Session {
+  id             String        @id @default(cuid())
+  computerId     String
+  accountId      String?
+  tariffId       String
+  status         SessionStatus
+  startedAt      DateTime
+  endsAt         DateTime
+  pausedAt       DateTime?
+  localRevision  Int           @default(0)
+
+  computer       Computer      @relation(fields: [computerId], references: [id])
+  account        Account?      @relation(fields: [accountId], references: [id])
+  tariff         Tariff        @relation(fields: [tariffId], references: [id])
+}
+
+model Operator {
+  id            String   @id @default(cuid())
+  username      String   @unique
+  passwordHash  String
+  role          Role
+  createdAt     DateTime @default(now())
+}
+
+model PromoCode {
+  id            String   @id @default(cuid())
+  code          String   @unique
+  bonusPercent  Int?
+  bonusMinutes  Int?
+  expiresAt     DateTime?
+  maxUses       Int?
+  usedCount     Int      @default(0)
+}
+
+model ClientEvent {
+  id           String   @id @default(cuid())
+  computerId   String
+  type         String
+  payload      Json
+  syncState    String
+  createdAt    DateTime @default(now())
+
+  computer     Computer @relation(fields: [computerId], references: [id])
+}
+
+model HardwareSnapshot {
+  id           String   @id @default(cuid())
+  computerId   String
+  cpuUsage     Float?
+  cpuTemp      Float?
+  gpuTemp      Float?
+  ramUsage     Float?
+  diskUsage    Float?
+  createdAt    DateTime @default(now())
+
+  computer     Computer @relation(fields: [computerId], references: [id])
+}
+
+model License {
+  id            String   @id @default(cuid())
+  clubName      String
+  licenseKey    String
+  maxComputers  Int
+  expiresAt     DateTime
+}
+15. Performance talablari
+Scale
+100 client PC
+Responsiveness
+dashboard update ≤ 1–2 sec
+Reconnect
+reconnect ≤ 5 sec
+Watchdog
+process restart ≤ 1 sec
+16. Commercial deploy talablari
+Admin installer
+
+O‘rnatadi:
+
+server
+postgres
+admin dashboard
+Client installer
+
+O‘rnatadi:
+
+shell
+watchdog service
+autostart
+17. Litsenziyalash
+
+Har club uchun:
+
+clubName
+maxComputers
+expiresAt
+local license validation
+
+Model:
+
+yillik obuna
+perpetual + maintenance

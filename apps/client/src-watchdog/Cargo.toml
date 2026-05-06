@@ -1,0 +1,15 @@
+[package]
+name = "gg_watchdog"
+version = "0.1.0"
+description = "GG Manager Windows Service watchdog for the kiosk shell"
+authors = ["GG Manager"]
+edition = "2021"
+
+[[bin]]
+name = "gg-watchdog"
+path = "src/main.rs"
+
+[dependencies]
+windows-service = "0.7"
+sysinfo = "0.31"
+log = "0.4"
