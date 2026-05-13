@@ -1,6 +1,9 @@
-﻿:root {
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
   color-scheme: dark;
-  font-family: Inter, Roboto, system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -9,6 +12,13 @@
 
 body {
   margin: 0;
-  background: #020617;
+  background: transparent;
   color: #e2e8f0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
 }

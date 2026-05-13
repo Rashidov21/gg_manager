@@ -1,12 +1,18 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod lan_sync;
 mod security;
 mod usb;
 mod watchdog;
-mod lan_sync;
+mod window_ctl;
 
 fn main() {
   tauri::Builder::default()
+    .invoke_handler(tauri::generate_handler![
+      window_ctl::get_computer_id,
+      window_ctl::present_overlay,
+      window_ctl::present_login,
+    ])
     .setup(|app| {
       println!("[GG Client] Starting kiosk mode shell");
 

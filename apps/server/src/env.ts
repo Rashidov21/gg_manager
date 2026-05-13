@@ -9,6 +9,8 @@ const envSchema = z.object({
   JWT_REFRESH_SECRET: z.string().min(16).default('dev_refresh_secret_please_change_in_prod'),
   JWT_ACCESS_TTL: z.string().min(1).default('15m'),
   JWT_REFRESH_TTL: z.string().min(1).default('7d'),
+  /** PIN for client kiosk login (phone + this PIN). Default matches client default. */
+  GG_CLIENT_PIN: z.string().min(1).default('1234'),
 });
 
 export type Env = z.infer<typeof envSchema>;

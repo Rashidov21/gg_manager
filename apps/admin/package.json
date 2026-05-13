@@ -3,14 +3,33 @@
   "private": true,
   "version": "0.1.0",
   "description": "GG Manager Admin Dashboard (Electron + React)",
+  "author": "GG Manager",
   "main": "electron/main.mjs",
   "scripts": {
     "dev": "concurrently -k \"npm:dev:renderer\" \"npm:dev:electron\"",
     "dev:renderer": "vite",
     "dev:electron": "wait-on tcp:5174 && electron .",
-    "build": "vite build && electron-builder",
+    "build": "vite build && node scripts/ensure-win-codesign-cache.mjs && electron-builder",
     "lint": "eslint src --ext ts,tsx",
     "typecheck": "tsc --noEmit"
+  },
+  "build": {
+    "appId": "com.ggmanager.admin",
+    "productName": "GG Manager Admin",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "forceCodeSigning": false,
+    "win": {
+      "sign": null,
+      "target": [
+        "dir"
+      ]
+    }
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

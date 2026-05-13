@@ -41,7 +41,12 @@ app.on('window-all-closed', () => {
 });
 
 app.whenReady().then(() => {
-  process.env.VITE_DEV_SERVER_URL = 'http://localhost:5174';
+  if (!app.isPackaged) {
+    process.env.VITE_DEV_SERVER_URL =
+      process.env.VITE_DEV_SERVER_URL || 'http://localhost:5174';
+  } else {
+    delete process.env.VITE_DEV_SERVER_URL;
+  }
   createWindow();
 
   app.on('activate', () => {

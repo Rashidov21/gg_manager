@@ -10,6 +10,12 @@
     "distDir": "../dist"
   },
   "tauri": {
+    "allowlist": {
+      "all": false,
+      "window": {
+        "all": true
+      }
+    },
     "bundle": {
       "active": false,
       "targets": "all",
@@ -22,13 +28,25 @@
     },
     "windows": [
       {
-        "label": "main",
+        "label": "login",
         "title": "GG Manager Client",
         "fullscreen": true,
         "resizable": false,
         "decorations": false,
         "alwaysOnTop": true,
-        "skipTaskbar": true
+        "skipTaskbar": true,
+        "visible": true
+      },
+      {
+        "label": "overlay",
+        "title": "GG Client",
+        "width": 280,
+        "height": 120,
+        "resizable": false,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "visible": false
       }
     ],
     "security": {
@@ -36,4 +54,3 @@
     }
   }
 }
-
